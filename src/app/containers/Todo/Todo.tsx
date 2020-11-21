@@ -33,7 +33,7 @@ const TodoIsolate = ({
 }: IAppProps) => {
 	useEffect(() => {
 		getInitList();
-	});
+	}, []);
 	const [validForm, setFormValidity] = useState<boolean>(true);
 	const [showChecked, setShowChecked] = useState<boolean>(true);
 
