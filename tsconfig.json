@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"target": "es5",
+		"jsx": "react",
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"declaration": false,
+		"removeComments": false,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"strict": true,
+		"outDir": "build",
+		"baseUrl": "src",
+		"lib": ["dom", "esnext"],
+		"module": "esnext",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"paths": {
+			// "@cat/components": ["./app/components/index.ts"],
+			"app/*": ["app/*"]
+		}
+	},
+	"exclude": ["build", "node_modules"]
+}

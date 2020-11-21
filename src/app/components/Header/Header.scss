@@ -1,0 +1,44 @@
+@import '../../styles/variables.scss';
+
+header {
+	width: 100%;
+	border-bottom: 2px solid $grey;
+	height: 4rem;
+	background: $lightgrey;
+}
+
+.header {
+	margin: 0 1rem;
+	display: flex;
+	height: 100%;
+	align-items: center;
+
+	&__logo {
+		height: 50%;
+		margin: 0 1rem 0 0;
+		img {
+			height: 100%;
+			display: block;
+		}
+	}
+
+	&__nav {
+		display: flex;
+		align-items: center;
+		margin-right: auto;
+	}
+
+	&__nav_item {
+		margin: 0 1rem 0 0;
+		text-decoration: none;
+		color: $black;
+		background: $lightgrey;
+		padding: 0.5rem 1rem;
+		&:hover {
+			text-decoration: underline;
+		}
+		&--active {
+			background: $grey;
+		}
+	}
+}

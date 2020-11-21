@@ -1,0 +1,23 @@
+@import '~app/styles/variables.scss';
+
+.form {
+	max-width: 250px;
+
+	form {
+		display: flex;
+		margin: 1rem 0;
+	}
+
+	&__input {
+		flex-grow: 1;
+		height: calc(2rem - 2px);
+		padding: 0 0.5rem;
+		border: 1px solid $grey;
+	}
+
+	&__submit_button {
+		height: 2rem;
+		margin: 0 0 0 0.5rem;
+		padding: 0 0.5rem;
+	}
+}

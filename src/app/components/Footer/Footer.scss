@@ -1,0 +1,18 @@
+@import '../../styles/variables.scss';
+
+.footer {
+	width: 100%;
+	background: $black;
+	color: $lightgrey;
+	display: flex;
+	font-size: 0.5rem;
+
+	&__rights {
+		flex-grow: 1;
+		padding: 1rem;
+	}
+
+	&__confidential {
+		padding: 1rem;
+	}
+}
