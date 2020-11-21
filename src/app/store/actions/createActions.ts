@@ -4,8 +4,12 @@ import {
 	DELETE_ITEM,
 	GET_INIT_DATA,
 	GET_INIT_LIST,
-	CHECK_ITEM
+	CHECK_ITEM,
+	ActionDeleteCheckedItems,
+	DELETE_CHECKED_ITEMS
 } from './actionTypes';
+import { ITodoItem } from 'app/store';
+import { ActionCreator } from 'redux';
 
 export type ActionReturnType = {
 	type: string;
@@ -32,6 +36,13 @@ const getDeleteItemAction = (index: number): ActionReturnType => ({
 	index
 });
 
+const getDeleteCheckedItemsAction: ActionCreator<ActionDeleteCheckedItems> = (
+	checkedItems: ITodoItem[]
+) => ({
+	type: DELETE_CHECKED_ITEMS,
+	checkedItems
+});
+
 const getInitDataAction = (value: string): ActionReturnType => ({
 	type: GET_INIT_DATA,
 	value
@@ -45,6 +56,7 @@ export {
 	getInputValueChangeAction,
 	getAddItemAction,
 	getDeleteItemAction,
+	getDeleteCheckedItemsAction,
 	getCheckItemAction,
 	getInitDataAction,
 	getInitListAction

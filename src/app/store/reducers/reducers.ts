@@ -3,9 +3,12 @@ import {
 	ADD_ITEM,
 	DELETE_ITEM,
 	CHECK_ITEM,
-	GET_INIT_DATA
+	GET_INIT_DATA,
+	DELETE_CHECKED_ITEMS,
+	ActionDeleteCheckedItems
 } from 'app/store/actions/actionTypes';
 import { randomId } from 'app/utils';
+import { ITodoItem } from 'app/store';
 
 const defaultState = {
 	inputValue: '',
@@ -37,6 +40,20 @@ export default (state = defaultState, action: any): INewState => {
 		}
 		case DELETE_ITEM: {
 			newState.list.splice(action.index, 1);
+			return newState;
+		}
+		case DELETE_CHECKED_ITEMS: {
+			const { checkedItems } = action as ActionDeleteCheckedItems;
+			const { list } = newState;
+
+			if (checkedItems.length) {
+				checkedItems.forEach((item) => {
+					const itemIndex = list.findIndex((i: ITodoItem) => i.id === item.id);
+					if (itemIndex > -1) {
+						list.splice(itemIndex, 1);
+					}
+				});
+			}
 			return newState;
 		}
 		case CHECK_ITEM: {

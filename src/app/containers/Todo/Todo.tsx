@@ -5,7 +5,8 @@ import {
 	getDeleteItemAction,
 	getInitListAction,
 	getCheckItemAction,
-	ActionReturnType
+	ActionReturnType,
+	getDeleteCheckedItemsAction
 } from 'app/store/actions/createActions';
 import { ITodoItem } from 'app/store';
 import { connect } from 'react-redux';
@@ -18,7 +19,7 @@ interface IAppProps {
 	handleAddItem: () => void;
 	handleDeleteItem: (i: number) => void;
 	handleCheckItem: (i: number) => void;
-	handleDeleteCheckedItems: () => void;
+	handleDeleteCheckedItems: (checkedItems: ITodoItem[]) => void;
 	getInitList: () => void;
 }
 
@@ -29,6 +30,7 @@ const TodoIsolate = ({
 	handleAddItem,
 	handleDeleteItem,
 	handleCheckItem,
+	handleDeleteCheckedItems,
 	getInitList
 }: IAppProps) => {
 	useEffect(() => {
@@ -104,7 +106,14 @@ const TodoIsolate = ({
 					{showChecked ? 'Hide' : 'Show'} Checked
 				</button>
 
-				<button data-test="button-remove-checked">Remove Checked</button>
+				<button
+					data-test="button-remove-checked"
+					onClick={() =>
+						handleDeleteCheckedItems(list.filter((todoItem) => todoItem.isChecked))
+					}
+				>
+					Remove Checked
+				</button>
 			</div>
 		</div>
 	);
@@ -129,6 +138,10 @@ const mapDispatchToProps = (dispatch: (a: ActionReturnType) => void) => {
 		},
 		handleDeleteItem(index: number) {
 			const action = getDeleteItemAction(index);
+			dispatch(action);
+		},
+		handleDeleteCheckedItems(checkedItems: ITodoItem[]) {
+			const action = getDeleteCheckedItemsAction(checkedItems);
 			dispatch(action);
 		},
 		handleCheckItem(index: number) {

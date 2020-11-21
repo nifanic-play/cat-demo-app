@@ -1,3 +1,6 @@
+import { ITodoItem } from 'app/store';
+import { Action } from 'redux';
+
 const INPUT_VALUE_CHANGE = 'input_value_change';
 const ADD_ITEM = 'add_item';
 const DELETE_ITEM = 'delete_item';
@@ -15,3 +18,7 @@ export {
 	GET_INIT_DATA,
 	GET_INIT_LIST
 };
+
+export interface ActionDeleteCheckedItems extends Action<typeof DELETE_CHECKED_ITEMS> {
+	checkedItems: ITodoItem[];
+}
