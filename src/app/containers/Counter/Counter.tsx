@@ -1,14 +1,20 @@
 import React from 'react';
-import { CountProvider } from 'app/utils';
+import { CountProvider, useCounter } from 'app/utils';
 import Styles from './Counter.scss';
 
 const Count: React.FC = () => {
+	const { count, setCount } = useCounter()!;
+
+	const handleDecrease = () => setCount(count - 1);
+
+	const handleIncrease = () => setCount(count + 1);
+
 	return (
 		<div className={Styles.counter}>
 			<small>current:</small>
-			<span className={Styles.counter__number}>0</span>
-			<button>-</button>
-			<button>+</button>
+			<span className={Styles.counter__number}>{count}</span>
+			<button onClick={handleDecrease}>-</button>
+			<button onClick={handleIncrease}>+</button>
 		</div>
 	);
 };
