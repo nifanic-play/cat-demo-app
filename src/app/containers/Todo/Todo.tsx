@@ -39,6 +39,8 @@ const TodoIsolate = ({
 	const [validForm, setFormValidity] = useState<boolean>(true);
 	const [showChecked, setShowChecked] = useState<boolean>(true);
 
+	const checkedItemsNum = list.filter((todoItem) => todoItem.isChecked).length;
+
 	return (
 		<div className={Styles.todo}>
 			<h1>📝 Todo List</h1>
@@ -102,6 +104,7 @@ const TodoIsolate = ({
 				<button
 					data-test="button-hide-checked"
 					onClick={() => setShowChecked(!showChecked)}
+					disabled={checkedItemsNum === 0}
 				>
 					{showChecked ? 'Hide' : 'Show'} Checked
 				</button>
@@ -111,6 +114,7 @@ const TodoIsolate = ({
 					onClick={() =>
 						handleDeleteCheckedItems(list.filter((todoItem) => todoItem.isChecked))
 					}
+					disabled={checkedItemsNum === 0}
 				>
 					Remove Checked
 				</button>
