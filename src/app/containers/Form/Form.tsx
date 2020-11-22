@@ -1,27 +1,47 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Styles from './Form.scss';
 
 const Form: React.FC = () => {
-	const inputVal = '';
+	const initVal = 'nothing yet...';
+	const inputRef = useRef<HTMLInputElement>(null);
+	const [inputVal, setInputVal] = useState(initVal);
+	const [reset, setReset] = useState(false);
 
-	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.value);
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputVal(e.target.value);
+
+	const onReset = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setInputVal(initVal);
+		setReset(true);
 	};
+
+	useEffect(() => {
+		if (inputVal === initVal && reset) {
+			setReset(false);
+			inputRef.current?.select();
+		}
+	}, [inputVal]);
 
 	return (
 		<div className={Styles.form}>
 			<h1>📙 Input Form</h1>
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					document.getElementById('input_form')?.focus();
-				}}
-			>
-				<input className={Styles.form__input} id="input_form" onChange={onChange} />
-				<input className={Styles.form__submit_button} type="submit" value="Reset" />
+			<form onSubmit={onReset}>
+				<input
+					className={Styles.form__input}
+					id="input_form"
+					onChange={onChange}
+					value={inputVal}
+					ref={inputRef}
+				/>
+				<input
+					className={Styles.form__submit_button}
+					type="submit"
+					value="Reset"
+					disabled={initVal === inputVal}
+				/>
 			</form>
 			<p>
-				Input contains, <strong>{inputVal || 'nothing yet...'}</strong>
+				Input contains, <strong>{inputVal}</strong>
 			</p>
 		</div>
 	);
