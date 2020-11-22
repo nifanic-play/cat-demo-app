@@ -1,38 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-interface IClockState {
-	date: Date;
-}
+export const Clock: React.FC = () => {
+	const [date, setDate] = useState<Date>(new Date());
 
-class Clock extends React.Component<unknown, IClockState> {
-	timerID: number;
+	const tick = () => setDate(new Date());
 
-	constructor(props: unknown) {
-		super(props);
-		this.timerID = 0;
-	}
+	useEffect(() => {
+		const timerId = window.setInterval(() => tick(), 1000);
+		return () => clearInterval(timerId);
+	}, []);
 
-	state = {
-		date: new Date()
-	};
-
-	componentDidMount() {
-		this.timerID = window.setInterval(() => this.tick(), 1000);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		this.setState({
-			date: new Date()
-		});
-	}
-
-	render() {
-		return <span>{this.state.date.toLocaleTimeString()}</span>;
-	}
-}
-
-export { Clock };
+	return <span>{date.toLocaleTimeString()}</span>;
+};
