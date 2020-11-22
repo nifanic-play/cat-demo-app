@@ -1,3 +1,4 @@
+import Styles from './Todo.scss';
 import React, { useEffect, useState } from 'react';
 import {
 	getInputValueChangeAction,
@@ -5,22 +6,23 @@ import {
 	getDeleteItemAction,
 	getInitListAction,
 	getCheckItemAction,
-	ActionReturnType,
 	getDeleteCheckedItemsAction
 } from 'app/store/actions/createActions';
-import { ITodoItem } from 'app/store';
-import { connect } from 'react-redux';
-import Styles from './Todo.scss';
+import { IState, ITodoItem } from 'app/store';
+import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 
-interface IAppProps {
+interface IDispatchProps {
+	getInitList: () => void;
+	handleAddItem: () => void;
+	handleCheckItem: (index: number) => void;
+	handleDeleteCheckedItems: (checkedItems: ITodoItem[]) => void;
+	handleDeleteItem: (index: number) => void;
+	inputValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+interface IAppProps extends IDispatchProps {
 	inputValue: string;
 	list: Array<ITodoItem>;
-	inputValueChange: () => void;
-	handleAddItem: () => void;
-	handleDeleteItem: (i: number) => void;
-	handleCheckItem: (i: number) => void;
-	handleDeleteCheckedItems: (checkedItems: ITodoItem[]) => void;
-	getInitList: () => void;
 }
 
 const TodoIsolate = ({
@@ -123,37 +125,35 @@ const TodoIsolate = ({
 	);
 };
 
-const mapStateToProps = (state: any) => {
-	return {
-		inputValue: state.inputValue,
-		list: state.list
-	};
-};
+const mapStateToProps: MapStateToProps<IState, undefined, IState> = ({ inputValue, list }) => ({
+	inputValue,
+	list
+});
 
-const mapDispatchToProps = (dispatch: (a: ActionReturnType) => void) => {
+const mapDispatchToProps: MapDispatchToProps<IDispatchProps, undefined> = (dispatch) => {
 	return {
-		inputValueChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-			const action = getInputValueChangeAction(e.target.value);
+		getInitList() {
+			const action = getInitListAction();
 			dispatch(action);
 		},
 		handleAddItem() {
 			const action = getAddItemAction();
 			dispatch(action);
 		},
-		handleDeleteItem(index: number) {
-			const action = getDeleteItemAction(index);
-			dispatch(action);
-		},
-		handleDeleteCheckedItems(checkedItems: ITodoItem[]) {
-			const action = getDeleteCheckedItemsAction(checkedItems);
-			dispatch(action);
-		},
-		handleCheckItem(index: number) {
+		handleCheckItem(index) {
 			const action = getCheckItemAction(index);
 			dispatch(action);
 		},
-		getInitList() {
-			const action = getInitListAction();
+		handleDeleteCheckedItems(checkedItems) {
+			const action = getDeleteCheckedItemsAction(checkedItems);
+			dispatch(action);
+		},
+		handleDeleteItem(index) {
+			const action = getDeleteItemAction(index);
+			dispatch(action);
+		},
+		inputValueChange(e) {
+			const action = getInputValueChangeAction(e.target.value);
 			dispatch(action);
 		}
 	};

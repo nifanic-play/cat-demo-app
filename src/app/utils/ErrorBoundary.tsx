@@ -4,7 +4,7 @@ interface IErrorBoundaryProps {
 	/**
 	 * Callback function once error retry limit is reached
 	 */
-	callbackFunction?: () => {};
+	callbackFunction?: () => void;
 	/**
 	 * Set the amount of times to retry a success state until error is captured
 	 */
@@ -33,7 +33,7 @@ class ErrorBoundary extends React.Component<IErrorBoundaryProps, IErrorBoundaryS
 		retries: 0
 	};
 
-	constructor(props: any) {
+	constructor(props: IErrorBoundaryProps) {
 		super(props);
 		this.state = {
 			hasError: false,
@@ -41,7 +41,7 @@ class ErrorBoundary extends React.Component<IErrorBoundaryProps, IErrorBoundaryS
 		};
 	}
 
-	componentDidCatch(error: any, errorInfo: any) {
+	componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
 		const { retries, callbackFunction } = this.props;
 		if (retries >= 1) {
 			this.setState((oldState) => ({

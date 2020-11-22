@@ -1,9 +1,13 @@
 import React from 'react';
 
-class Clock extends React.Component {
+interface IClockState {
+	date: Date;
+}
+
+class Clock extends React.Component<unknown, IClockState> {
 	timerID: number;
 
-	constructor(props: any) {
+	constructor(props: unknown) {
 		super(props);
 		this.timerID = 0;
 	}

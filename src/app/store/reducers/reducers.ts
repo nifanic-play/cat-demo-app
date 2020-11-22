@@ -5,22 +5,22 @@ import {
 	CHECK_ITEM,
 	GET_INIT_DATA,
 	DELETE_CHECKED_ITEMS,
-	ActionDeleteCheckedItems
+	AllActions
 } from 'app/store/actions/actionTypes';
 import { randomId } from 'app/utils';
 import { ITodoItem } from 'app/store';
 
-const defaultState = {
-	inputValue: '',
-	list: [{}]
-};
-
-interface INewState {
+export interface IState {
 	inputValue: string;
-	list: Array<typeof defaultState>;
+	list: ITodoItem[];
 }
 
-export default (state = defaultState, action: any): INewState => {
+const defaultState: IState = {
+	inputValue: '',
+	list: []
+};
+
+export default (state = defaultState, action: AllActions): IState => {
 	const newState = JSON.parse(JSON.stringify(state));
 
 	switch (action.type) {
@@ -29,7 +29,7 @@ export default (state = defaultState, action: any): INewState => {
 			return newState;
 		}
 		case ADD_ITEM: {
-			const newItem = {
+			const newItem: ITodoItem = {
 				id: randomId(),
 				name: state.inputValue,
 				isChecked: false
@@ -43,7 +43,7 @@ export default (state = defaultState, action: any): INewState => {
 			return newState;
 		}
 		case DELETE_CHECKED_ITEMS: {
-			const { checkedItems } = action as ActionDeleteCheckedItems;
+			const { checkedItems } = action;
 			const { list } = newState;
 
 			if (checkedItems.length) {

@@ -1,54 +1,51 @@
 import {
-	INPUT_VALUE_CHANGE,
+	ActionAddItem,
+	ActionCheckItem,
+	ActionDeleteCheckedItems,
+	ActionDeleteItem,
+	ActionGetInitData,
+	ActionGetInitList,
+	ActionInputValueChange,
 	ADD_ITEM,
+	CHECK_ITEM,
+	DELETE_CHECKED_ITEMS,
 	DELETE_ITEM,
 	GET_INIT_DATA,
 	GET_INIT_LIST,
-	CHECK_ITEM,
-	ActionDeleteCheckedItems,
-	DELETE_CHECKED_ITEMS
+	INPUT_VALUE_CHANGE
 } from './actionTypes';
-import { ITodoItem } from 'app/store';
 import { ActionCreator } from 'redux';
 
-export type ActionReturnType = {
-	type: string;
-	value?: string;
-	index?: number;
-};
-
-const getInputValueChangeAction = (value: string): ActionReturnType => ({
+const getInputValueChangeAction: ActionCreator<ActionInputValueChange> = (value) => ({
 	type: INPUT_VALUE_CHANGE,
 	value
 });
 
-const getAddItemAction = (): ActionReturnType => ({
+const getAddItemAction: ActionCreator<ActionAddItem> = () => ({
 	type: ADD_ITEM
 });
 
-const getCheckItemAction = (index: number): ActionReturnType => ({
+const getCheckItemAction: ActionCreator<ActionCheckItem> = (index) => ({
 	type: CHECK_ITEM,
 	index
 });
 
-const getDeleteItemAction = (index: number): ActionReturnType => ({
+const getDeleteItemAction: ActionCreator<ActionDeleteItem> = (index) => ({
 	type: DELETE_ITEM,
 	index
 });
 
-const getDeleteCheckedItemsAction: ActionCreator<ActionDeleteCheckedItems> = (
-	checkedItems: ITodoItem[]
-) => ({
+const getDeleteCheckedItemsAction: ActionCreator<ActionDeleteCheckedItems> = (checkedItems) => ({
 	type: DELETE_CHECKED_ITEMS,
 	checkedItems
 });
 
-const getInitDataAction = (value: string): ActionReturnType => ({
+const getInitDataAction: ActionCreator<ActionGetInitData> = (value) => ({
 	type: GET_INIT_DATA,
 	value
 });
 
-const getInitListAction = (): ActionReturnType => ({
+const getInitListAction: ActionCreator<ActionGetInitList> = () => ({
 	type: GET_INIT_LIST
 });
 
